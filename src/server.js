@@ -65,8 +65,9 @@ app.post("/api/emails/process-all", async (req, res) => {
       addLog(`❌ Erreur de traitement — ${email.subject} : ${err.message}`);
       results.push({ id: email.id, ok: false, error: err.message });
     }
-    // petite pause entre chaque appel pour rester sous les limites de rate-limit de l'API gratuite
-    await new Promise((r) => setTimeout(r, 800));
+    // pause entre chaque appel pour rester sous les limites de débit de l'API gratuite
+    // (le retry automatique sur 429 dans claudeClient.js gère le reste si besoin)
+    await new Promise((r) => setTimeout(r, 2500));
   }
 
   addLog(`✅ Traitement par lot terminé — ${results.filter((r) => r.ok).length}/${pending.length} réussis`);
