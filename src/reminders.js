@@ -14,28 +14,35 @@ async function generateFollowUp(email) {
   return result.brouillon_reponse;
 }
 
-export function startReminderScheduler() {
-  setInterval(async () => {
-    const now = Date.now();
-    for (const email of emails) {
-      if (
+// Logique pure de vérification des relances, isolée du setInterval pour être testable unitairement.
+// Retourne la liste des ids d'emails pour lesquels une relance a été déclenchée.
+export async function checkReminders(now = Date.now(), pool = emails) {
+  const triggered = [];
+  for (const email of pool) {
+    const isDue =
         email.status === "replied" &&
         email.necessite_relance &&
         !email.followUpSent &&
         !email.answeredByRecipient &&
         email.followUpDeadline &&
-        now >= email.followUpDeadline
-      ) {
-        try {
-          const relance = await generateFollowUp(email);
-          email.followUpSent = true;
-          email.status = "relance_envoyee";
-          addLog(`🔁 Relance envoyée automatiquement — ${email.subject}`);
-          email.relanceContent = relance;
-        } catch (err) {
-          addLog(`❌ Échec génération relance — ${email.subject} : ${err.message}`);
-        }
-      }
+        now >= email.followUpDeadline;
+
+    if (!isDue) continue;
+
+    try {
+      const relance = await generateFollowUp(email);
+      email.followUpSent = true;
+      email.status = "relance_envoyee";
+      email.relanceContent = relance;
+      addLog(`🔁 Relance envoyée automatiquement — ${email.subject}`);
+      triggered.push(email.id);
+    } catch (err) {
+      addLog(`❌ Échec génération relance — ${email.subject} : ${err.message}`);
     }
-  }, CHECK_INTERVAL_MS);
+  }
+  return triggered;
+}
+
+export function startReminderScheduler() {
+  setInterval(() => checkReminders(), CHECK_INTERVAL_MS);
 }

@@ -5,7 +5,9 @@
   "description": "Assistant de tri, classification et réponse automatique d'emails - Hivest Capital Partners",
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "test": "node --test",
+    "check": "node --check src/alerts.js && node --check src/claudeClient.js && node --check src/prompts.js && node --check src/reminders.js && node --check src/server.js && node --check src/store.js"
   },
   "dependencies": {
     "dotenv": "^16.4.5",

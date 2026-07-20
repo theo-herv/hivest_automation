@@ -30,12 +30,16 @@ Ouvrir http://localhost:3000
 ## Vérifier que tout marche sans consommer d'API (avant la démo)
 
 ```bash
-node test-pipeline.mjs
+npm test
 ```
 
-Ce script simule les réponses de Groq et Telegram pour valider tout le pipeline
-(classification, parsing JSON, alerte) sans clé API réelle. Doit afficher
-`✅ Tous les tests du pipeline sont passés.`
+Suite de 17 tests (Node test runner natif, aucune dépendance à installer) qui simule
+les réponses de Groq et Telegram : classification, détection de fraude sur le RIB,
+gestion des erreurs API, logique de relance (délai dépassé, réponse déjà reçue,
+garde-fou anti-doublon...). Aucune clé API réelle n'est nécessaire pour les lancer.
+
+Un workflow **GitHub Actions** (`.github/workflows/ci.yml`) relance cette suite
+automatiquement à chaque push/PR sur `main`, sur Node 18/20/22 — sans secret à configurer.
 
 ## Configurer et tester l'alerte Telegram (bonus 1)
 
@@ -62,12 +66,14 @@ Ce script simule les réponses de Groq et Telegram pour valider tout le pipeline
 ## Structure
 
 ```
-data/emails.json     18 emails fictifs (deal, LP, participation, conseil, admin, spam)
+.github/workflows/ci.yml   CI GitHub Actions (check + tests, sans secret requis)
+data/emails.json      30 emails fictifs (deal, LP, participation, conseil, admin, spam, cas limites)
+test/pipeline.test.mjs 17 tests automatisés (classification, alertes, store, relances)
 src/prompts.js        prompt système + construction du prompt par email
-src/claudeClient.js   appel à l'API Anthropic (messages), parsing JSON
+src/claudeClient.js   appel à l'API Groq, parsing JSON
 src/store.js          état en mémoire + journal
 src/alerts.js         alerte Telegram (bonus 1)
-src/reminders.js       scheduler de relances (bonus 2)
+src/reminders.js       relances (bonus 2) — logique testable indépendamment du scheduler
 src/server.js         serveur Express + routes API
 public/index.html     interface de démo
 ```

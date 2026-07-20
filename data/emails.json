@@ -142,5 +142,101 @@
     "subject": "Découvrez notre logiciel de CRM",
     "date": "2026-07-09T14:00:00Z",
     "body": "Bonjour, je me permets de vous contacter pour vous présenter notre solution CRM nouvelle génération, idéale pour les fonds d'investissement. Disponible pour une démo cette semaine ? Cordialement, l'équipe commerciale"
+  },
+  {
+    "id": "email-19",
+    "from": "s.bertin@lazard-ma.com",
+    "fromName": "Sophie Bertin — Lazard",
+    "subject": "Retour sur votre LOI — Projet Charlie",
+    "date": "2026-07-17T10:00:00Z",
+    "body": "Bonjour, nous avons bien reçu votre lettre d'intention sur le Projet Charlie. Le vendeur souhaite organiser un management meeting la semaine prochaine avant de trancher entre les offres reçues. Disponibilités à nous communiquer. Sophie"
+  },
+  {
+    "id": "email-20",
+    "from": "president@nordindus-portco.fr",
+    "fromName": "François Petit — Président NordIndus (participation)",
+    "subject": "(URGENT) Signature du protocole de cession — closing demain",
+    "date": "2026-07-17T16:00:00Z",
+    "body": "Bonjour, l'acquéreur de notre ligne d'activité secondaire est prêt à signer, le closing est prévu demain 11h chez le notaire. Il ne manque plus qu'une validation finale de votre part sur le prix ajusté. Merci de revenir vers moi en urgence. François"
+  },
+  {
+    "id": "email-21",
+    "from": "p.simonet@familyoffice-sn.com",
+    "fromName": "Patricia Simonet — Simonet Family Office (LP)",
+    "subject": "Second rappel — appel de fonds en attente de versement",
+    "date": "2026-07-16T09:00:00Z",
+    "body": "Bonjour, nous n'avons pas encore reçu de confirmation de notre part concernant le calendrier de versement du dernier capital call. Pourriez-vous nous confirmer que tout est en ordre de votre côté ? Merci, Patricia"
+  },
+  {
+    "id": "email-22",
+    "from": "assistante@hivest.fr",
+    "fromName": "Nathalie Cros — Assistante de direction",
+    "subject": "Note interne : arrivée du nouveau stagiaire IA lundi",
+    "date": "2026-07-17T08:30:00Z",
+    "body": "Bonjour à tous, pour rappel, notre stagiaire IA & Automatisation commence lundi prochain. Merci de lui réserver un accueil chaleureux et de penser à créer ses accès (badge, VPN, boîte mail). Nathalie"
+  },
+  {
+    "id": "email-23",
+    "from": "conformite@hivest-lp-portal.fr",
+    "fromName": "Service Conformité RGPD",
+    "subject": "Demande d'accès aux données personnelles (RGPD)",
+    "date": "2026-07-15T13:00:00Z",
+    "body": "Bonjour, en tant qu'investisseur du fonds, je souhaite exercer mon droit d'accès RGPD et obtenir une copie de l'ensemble des données personnelles que vous détenez me concernant. Merci de traiter cette demande dans le délai légal d'un mois. Cordialement"
+  },
+  {
+    "id": "email-24",
+    "from": "m.klein@assurex-vie.fr",
+    "fromName": "Michel Klein — AssurEx Vie (LP)",
+    "subject": "Insatisfaction concernant les frais de gestion",
+    "date": "2026-07-14T11:20:00Z",
+    "body": "Bonjour, en analysant le dernier relevé, nous constatons une hausse des frais de gestion non anticipée dans nos projections. Pourriez-vous nous détailler l'origine de cette évolution avant notre comité d'investissement interne la semaine prochaine ? Cordialement, Michel Klein"
+  },
+  {
+    "id": "email-25",
+    "from": "notifications@docusign-secure-verify.net",
+    "fromName": "DocuSign Notification",
+    "subject": "(URGENT) Document en attente de signature électronique",
+    "date": "2026-07-17T06:45:00Z",
+    "body": "Un document nécessite votre signature immédiate pour éviter l'expiration du lien sécurisé. Cliquez ici pour accéder au document et confirmer votre identité avec vos identifiants de messagerie professionnelle. Ce lien expire dans 2 heures."
+  },
+  {
+    "id": "email-26",
+    "from": "achats@mecaprecis-portco.fr",
+    "fromName": "Sandra Weiss — Responsable Achats MécaPrécis (participation)",
+    "subject": "Hausse tarifaire fournisseur acier +8%",
+    "date": "2026-07-13T15:30:00Z",
+    "body": "Bonjour, notre principal fournisseur d'acier nous notifie une hausse de tarif de 8% à compter du mois prochain, liée aux cours des matières premières. Impact estimé sur notre marge : -0.6 point. Je vous tiens informés de nos négociations. Sandra"
+  },
+  {
+    "id": "email-27",
+    "from": "contact@greenaudit-esg.fr",
+    "fromName": "Cabinet GreenAudit ESG",
+    "subject": "Rapport d'audit ESG — participation LogiTrans",
+    "date": "2026-07-11T09:00:00Z",
+    "body": "Bonjour, veuillez trouver ci-joint notre rapport d'audit ESG annuel sur LogiTrans : émissions carbone, politique sociale, gouvernance. Score global : B+. Quelques recommandations d'amélioration en synthèse. Cordialement, Cabinet GreenAudit"
+  },
+  {
+    "id": "email-28",
+    "from": "p.simonet@familyoffice-sn.com",
+    "fromName": "Patricia Simonet — Simonet Family Office (LP)",
+    "subject": "Demande de la politique ESG du fonds",
+    "date": "2026-07-10T14:00:00Z",
+    "body": "Bonjour, dans le cadre de notre propre reporting extra-financier, pourriez-vous nous transmettre la politique ESG actuelle du fonds ainsi que les critères d'exclusion appliqués aux investissements ? Merci d'avance, Patricia"
+  },
+  {
+    "id": "email-29",
+    "from": "newsletter@privateequity-insights.com",
+    "fromName": "Private Equity Insights",
+    "subject": "Votre synthèse hebdomadaire du marché du M&A",
+    "date": "2026-07-12T07:00:00Z",
+    "body": "Cette semaine dans le M&A : ralentissement des multiples de valorisation dans l'industriel, hausse des build-ups dans la distribution, et zoom sur les levées de fonds record en tech. Bonne lecture ! L'équipe Private Equity Insights"
+  },
+  {
+    "id": "email-30",
+    "from": "direction@atlanpack-portco.fr",
+    "fromName": "Julie Constant — DG AtlanPack (participation)",
+    "subject": "(URGENT) Incendie limité dans l'entrepôt principal cette nuit",
+    "date": "2026-07-17T05:15:00Z",
+    "body": "Bonjour, un début d'incendie s'est déclaré cette nuit dans notre entrepôt principal, maîtrisé rapidement par les pompiers. Aucun blessé. Dégâts limités à une zone de stockage, production non impactée. Je vous appelle dès que possible pour faire le point complet et sur la déclaration d'assurance. Julie"
   }
 ]
