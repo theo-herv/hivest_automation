@@ -1,0 +1,146 @@
+[
+  {
+    "id": "email-01",
+    "from": "j.marchand@edmondbanque-ma.fr",
+    "fromName": "Julien Marchand — Edmond de Rothschild M&A",
+    "subject": "Projet Alpha : PME industrielle, 45 M€ de CA, dirigeant proche de la retraite",
+    "date": "2026-07-13T09:12:00Z",
+    "body": "Bonjour, nous lançons la commercialisation du Projet Alpha, une PME industrielle du secteur de la mécanique de précision, CA 45M€, EBITDA 6.2M€. Le dirigeant-fondateur souhaite céder dans le cadre d'un départ à la retraite. Vous trouverez le teaser en pièce jointe. Revenez vers nous si le dossier vous intéresse, nous vous enverrons le NDA. Cordialement, Julien"
+  },
+  {
+    "id": "email-02",
+    "from": "s.bertin@lazard-ma.com",
+    "fromName": "Sophie Bertin — Lazard",
+    "subject": "CIM Projet Beta — retour NDA signé attendu",
+    "date": "2026-07-13T14:30:00Z",
+    "body": "Bonjour, suite à votre intérêt pour le Projet Beta, merci de nous retourner le NDA signé en pièce jointe afin que nous puissions vous transmettre le CIM complet ainsi que l'accès à la data room. Bien à vous, Sophie"
+  },
+  {
+    "id": "email-03",
+    "from": "t.dubreuil@rothschildco.com",
+    "fromName": "Thomas Dubreuil — Rothschild & Co",
+    "subject": "(URGENT) Rappel : dépôt des LOI vendredi 18h — Projet Charlie",
+    "date": "2026-07-16T08:05:00Z",
+    "body": "Bonjour, nous vous rappelons que la date limite de dépôt des lettres d'intention pour le Projet Charlie est fixée à vendredi 18h, sans report possible. Merci de nous confirmer votre participation au process d'ici demain. Cordialement, Thomas"
+  },
+  {
+    "id": "email-04",
+    "from": "c.moreau@dc-advisory.fr",
+    "fromName": "Claire Moreau — DC Advisory",
+    "subject": "Opportunité off-market : distribution B2B, 8 M€ d'EBITDA",
+    "date": "2026-07-10T11:00:00Z",
+    "body": "Bonjour, nous avons un mandat exclusif hors process sur une société de distribution B2B, EBITDA 8M€, marge en croissance depuis 3 ans. Le vendeur souhaite avancer vite avec un acheteur unique. Seriez-vous disponible cette semaine pour un premier échange ? Claire"
+  },
+  {
+    "id": "email-05",
+    "from": "investor.relations@assurex-vie.fr",
+    "fromName": "Marc Lenoir — AssurEx Vie (LP)",
+    "subject": "Demande de reporting du 2e trimestre",
+    "date": "2026-07-11T10:00:00Z",
+    "body": "Bonjour, dans le cadre du suivi trimestriel de notre engagement dans le fonds, pourriez-vous nous transmettre le reporting du T2 2026 (performance, valorisations, mouvements du portefeuille) ? Merci d'avance. Marc Lenoir, AssurEx Vie"
+  },
+  {
+    "id": "email-06",
+    "from": "p.simonet@familyoffice-sn.com",
+    "fromName": "Patricia Simonet — Simonet Family Office (LP)",
+    "subject": "Question sur le prochain appel de fonds (capital call)",
+    "date": "2026-07-14T16:45:00Z",
+    "body": "Bonjour, nous avons reçu la notification du prochain capital call mais souhaiterions confirmer le montant exact ainsi que la date limite de versement. Pouvez-vous nous éclairer ? Merci, Patricia"
+  },
+  {
+    "id": "email-07",
+    "from": "no-reply@secure-hivest-payments.co",
+    "fromName": "AssurEx Vie — Service Comptabilité",
+    "subject": "(URGENT) Mise à jour de notre RIB",
+    "date": "2026-07-16T07:30:00Z",
+    "body": "Bonjour, suite à un changement de banque, merci de mettre à jour nos coordonnées bancaires pour tout futur versement (distribution, capital call) avec le nouveau RIB en pièce jointe. Merci de confirmer la prise en compte rapidement. Cordialement, Service Comptabilité"
+  },
+  {
+    "id": "email-08",
+    "from": "direction@mecaprecis-portco.fr",
+    "fromName": "Antoine Roy — DG MécaPrécis (participation)",
+    "subject": "Reporting mensuel — chiffres de mars",
+    "date": "2026-07-09T09:00:00Z",
+    "body": "Bonjour, voici en pièce jointe le reporting mensuel de mars : chiffre d'affaires, marge, trésorerie et carnet de commandes. RAS particulier ce mois-ci. Bonne réception. Antoine"
+  },
+  {
+    "id": "email-09",
+    "from": "cfo@logitrans-portco.fr",
+    "fromName": "Isabelle Faucher — DAF LogiTrans (participation)",
+    "subject": "(URGENT) Risque de dépassement d'un covenant bancaire ce trimestre",
+    "date": "2026-07-15T18:20:00Z",
+    "body": "Bonjour, nos projections de fin de trimestre font apparaître un risque de dépassement du covenant de leverage bancaire (dette nette / EBITDA), en raison d'un ralentissement d'activité sur juin. Nous devons échanger rapidement pour préparer une communication vers la banque et anticiper un éventuel waiver. Isabelle"
+  },
+  {
+    "id": "email-10",
+    "from": "president@nordindus-portco.fr",
+    "fromName": "François Petit — Président NordIndus (participation)",
+    "subject": "(URGENT) Le directeur général démissionne",
+    "date": "2026-07-16T09:50:00Z",
+    "body": "Bonjour, je vous informe que notre directeur général vient de me remettre sa démission avec effet dans 30 jours, pour raisons personnelles. Il faut organiser rapidement un point de crise pour sécuriser la transition et rassurer les équipes. Disponible dès aujourd'hui. François"
+  },
+  {
+    "id": "email-11",
+    "from": "direction@atlanpack-portco.fr",
+    "fromName": "Julie Constant — DG AtlanPack (participation)",
+    "subject": "Projet de build-up : rachat d'un concurrent",
+    "date": "2026-07-08T15:00:00Z",
+    "body": "Bonjour, nous étudions le rachat d'un concurrent régional (CA 6M€) qui renforcerait notre position sur le grand ouest. Je vous propose une première présentation du dossier lors du prochain comité. Cordialement, Julie"
+  },
+  {
+    "id": "email-12",
+    "from": "m.girard@dupont-avocats.fr",
+    "fromName": "Maître Girard — Dupont Avocats",
+    "subject": "Rapport de due diligence juridique — Projet Alpha",
+    "date": "2026-07-14T17:00:00Z",
+    "body": "Bonjour, veuillez trouver ci-joint notre rapport de due diligence juridique sur le Projet Alpha. Aucun point bloquant identifié, quelques réserves mineures détaillées en synthèse page 2. Restons à disposition pour en discuter. Maître Girard"
+  },
+  {
+    "id": "email-13",
+    "from": "facturation@auditplus-dd.fr",
+    "fromName": "AuditPlus — Service Facturation",
+    "subject": "Facture — mission de DD financière",
+    "date": "2026-07-12T10:00:00Z",
+    "body": "Bonjour, veuillez trouver ci-joint notre facture n°2026-0745 relative à la mission de due diligence financière réalisée sur le Projet Beta. Paiement à 30 jours. Cordialement, Service Facturation AuditPlus"
+  },
+  {
+    "id": "email-14",
+    "from": "assistante@hivest.fr",
+    "fromName": "Nathalie Cros — Assistante de direction",
+    "subject": "CR du comité d'investissement de lundi",
+    "date": "2026-07-15T11:00:00Z",
+    "body": "Bonjour à tous, vous trouverez ci-joint le compte-rendu du comité d'investissement de lundi (Projet Alpha, Projet Charlie, point NordIndus). Merci de me faire vos retours d'ici mercredi. Nathalie"
+  },
+  {
+    "id": "email-15",
+    "from": "compta@hivest.fr",
+    "fromName": "Marc Delannoy — Comptabilité interne",
+    "subject": "Note de frais à valider avant vendredi",
+    "date": "2026-07-14T09:00:00Z",
+    "body": "Bonjour, merci de valider vos notes de frais du mois sur l'outil interne avant vendredi midi pour le traitement de la paie. Merci d'avance, Marc"
+  },
+  {
+    "id": "email-16",
+    "from": "assistante@hivest.fr",
+    "fromName": "Nathalie Cros — Assistante de direction",
+    "subject": "Invitation : point hebdo deal flow, jeudi 9h",
+    "date": "2026-07-13T08:00:00Z",
+    "body": "Bonjour, invitation au point hebdomadaire deal flow de jeudi 9h en salle Seine. Ordre du jour : Alpha, Beta, Charlie, opportunité off-market DC Advisory. Nathalie"
+  },
+  {
+    "id": "email-17",
+    "from": "contact@seo-boost-pro.com",
+    "fromName": "SEO Boost Pro",
+    "subject": "Boostez votre référencement, -50% aujourd'hui !!!",
+    "date": "2026-07-11T03:22:00Z",
+    "body": "Profitez de -50% sur nos offres de référencement SEO premium, offre valable aujourd'hui uniquement ! Cliquez ici pour en profiter avant minuit. L'équipe SEO Boost Pro"
+  },
+  {
+    "id": "email-18",
+    "from": "sales@supercrm-solutions.io",
+    "fromName": "SuperCRM Solutions",
+    "subject": "Découvrez notre logiciel de CRM",
+    "date": "2026-07-09T14:00:00Z",
+    "body": "Bonjour, je me permets de vous contacter pour vous présenter notre solution CRM nouvelle génération, idéale pour les fonds d'investissement. Disponible pour une démo cette semaine ? Cordialement, l'équipe commerciale"
+  }
+]

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hivest — Correspondence Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b1420;
+    --panel:#111d2d;
+    --panel-2:#0d1826;
+    --border:#25384d;
+    --border-strong:#33495f;
+    --text:#eef2f7;
+    --muted:#9bacc4;
+    --muted-2:#6b8098;
+    --navy:#0d1826;
+    --brass:#d8c584;
+    --brass-bg:rgba(216,197,132,0.12);
+    --ok:#6fdba0;
+    --ok-bg:rgba(31,122,77,0.16);
+    --warn:#f0b84f;
+    --warn-bg:rgba(154,106,16,0.16);
+    --alert:#ff8f86;
+    --alert-bg:rgba(179,38,30,0.18);
+    --font-display:'Fraunces', serif;
+    --font-body:'IBM Plex Sans', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:15px;
+    -webkit-font-smoothing:antialiased;
+  }
+  button{ font-family:var(--font-body); }
+
+  /* ---------- Header ---------- */
+  header{
+    background:var(--navy);
+    color:#fff;
+    padding:22px 28px;
+    border-bottom:1px solid var(--border);
+  }
+  .brand{ display:flex; align-items:baseline; gap:10px; }
+  .brand .mark{ font-family:var(--font-display); font-weight:700; font-size:24px; }
+  .brand .sub{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--brass); opacity:0.9;
+  }
+  header .tagline{ margin:4px 0 16px; color:var(--muted); font-size:13.5px; }
+  .controls{ display:flex; gap:10px; flex-wrap:wrap; }
+  .btn{
+    border:1px solid var(--border-strong);
+    background:transparent;
+    color:#fff;
+    padding:9px 16px;
+    font-size:13px;
+    font-weight:500;
+    border-radius:5px;
+    cursor:pointer;
+    transition:background .15s ease, transform .08s ease;
+  }
+  .btn:hover:not(:disabled){ background:rgba(255,255,255,0.08); }
+  .btn:active:not(:disabled){ transform:translateY(1px); }
+  .btn:disabled{ opacity:0.4; cursor:not-allowed; }
+  .btn-primary{ background:var(--brass); border-color:var(--brass); color:#231b04; font-weight:600; }
+  .btn-primary:hover:not(:disabled){ background:#e3d29c; }
+  .btn:focus-visible{ outline:2px solid var(--brass); outline-offset:2px; }
+
+  /* ---------- Stat strip ---------- */
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--border);
+    border-bottom:1px solid var(--border);
+  }
+  .stat{ background:var(--panel); padding:14px 20px; text-align:left; }
+  .stat .num{
+    font-family:var(--font-mono);
+    font-size:26px;
+    font-weight:600;
+    color:var(--text);
+    transition:color .3s ease;
+  }
+  .stat .num.pulse{ color:var(--brass); }
+  .stat .label{
+    font-size:11.5px;
+    color:var(--muted-2);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-top:2px;
+  }
+  @media (max-width:700px){ .stats{ grid-template-columns:repeat(2,1fr); } }
+
+  /* ---------- Layout ---------- */
+  .desk{
+    display:grid;
+    grid-template-columns:1fr 480px;
+    gap:20px;
+    padding:20px 24px;
+    align-items:start;
+  }
+  @media (max-width:1080px){ .desk{ grid-template-columns:1fr; } }
+
+  .ledger{ display:flex; flex-direction:column; gap:14px; }
+
+  /* ---------- Dossier card ---------- */
+  .dossier{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:16px 18px;
+  }
+  .badges{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.03em;
+    padding:3px 9px;
+    border-radius:20px;
+    text-transform:uppercase;
+  }
+  .badge.cat{ background:rgba(255,255,255,0.06); color:var(--muted); }
+  .badge.status{ background:rgba(255,255,255,0.06); color:var(--muted); }
+  .badge.u-faible{ background:var(--ok-bg); color:var(--ok); }
+  .badge.u-moyenne{ background:var(--warn-bg); color:var(--warn); }
+  .badge.u-haute{ background:var(--alert-bg); color:var(--alert); }
+  .badge.alertflag{ background:var(--alert-bg); color:var(--alert); }
+
+  .dossier h3{ margin:0 0 4px; font-size:16px; font-weight:600; line-height:1.4; color:var(--text); }
+  .meta{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    color:var(--muted-2);
+    margin-bottom:10px;
+  }
+  .body-text{
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.6;
+    white-space:pre-wrap;
+    margin:8px 0 10px;
+    padding:10px 12px;
+    background:var(--panel-2);
+    border-radius:6px;
+  }
+  .action-line{
+    font-size:12.5px;
+    color:var(--brass);
+    background:var(--brass-bg);
+    padding:7px 10px;
+    border-radius:6px;
+    margin-bottom:8px;
+    font-weight:500;
+  }
+  .draft{
+    background:var(--panel-2);
+    border:1px solid var(--border-strong);
+    padding:11px 13px;
+    font-size:13px;
+    color:var(--text);
+    white-space:pre-wrap;
+    margin-top:8px;
+    border-radius:6px;
+    line-height:1.55;
+  }
+  .draft strong{
+    display:block;
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin-bottom:6px;
+    font-weight:700;
+  }
+  .draft.followup{ background:var(--warn-bg); border-color:rgba(240,184,79,0.4); }
+  .draft.followup strong{ color:var(--warn); }
+
+  .card-actions{ margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; }
+  .card-actions .btn{
+    border-color:var(--border-strong);
+    color:var(--text);
+    background:transparent;
+    padding:7px 13px;
+    font-size:12.5px;
+  }
+  .card-actions .btn:hover:not(:disabled){ background:rgba(255,255,255,0.06); }
+
+  /* ---------- Journal (logs) — plus large et plus lisible ---------- */
+  .journal{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:8px;
+    position:sticky;
+    top:20px;
+    max-height:calc(100vh - 200px);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  .journal-head{
+    padding:16px 18px;
+    border-bottom:1px solid var(--border);
+    font-size:14px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--muted);
+  }
+  .journal-body{ overflow-y:auto; padding:14px; flex:1; }
+  .journal-empty{ color:var(--muted-2); font-size:14px; padding:12px 4px; }
+  .log-entry{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    padding:12px 14px;
+    border-radius:8px;
+    margin-bottom:8px;
+    font-size:14px;
+    line-height:1.5;
+  }
+  .log-entry .icon{ font-size:16px; line-height:1.4; flex-shrink:0; }
+  .log-entry .content{ min-width:0; }
+  .log-entry .time{
+    display:block;
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--muted-2);
+    margin-bottom:3px;
+  }
+  .log-entry .msg{ color:var(--text); word-break:break-word; }
+  .log-entry.success{ background:var(--ok-bg); }
+  .log-entry.success .msg{ color:var(--ok); }
+  .log-entry.alert{ background:var(--alert-bg); }
+  .log-entry.alert .msg{ color:var(--alert); }
+  .log-entry.warn{ background:var(--warn-bg); }
+  .log-entry.warn .msg{ color:var(--warn); }
+  .log-entry.neutral{ background:rgba(255,255,255,0.04); }
+  .log-entry.neutral .msg{ color:var(--muted); }
+
+  ::-webkit-scrollbar{ width:8px; }
+  ::-webkit-scrollbar-track{ background:transparent; }
+  ::-webkit-scrollbar-thumb{ background:var(--border-strong); border-radius:4px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span class="mark">Hivest</span>
+    <span class="sub">Capital Partners</span>
+  </div>
+  <p class="tagline">Assistant de tri et de réponse — deal flow, LP, portefeuille</p>
+  <div class="controls">
+    <button id="btnAll" class="btn btn-primary" onclick="processAll()">Traiter tous les emails en attente</button>
+    <button class="btn" onclick="testAlert()">Tester l'alerte Telegram</button>
+  </div>
+</header>
+
+<div class="stats" id="stats"></div>
+
+<div class="desk">
+  <section class="ledger" id="list"></section>
+  <aside class="journal">
+    <div class="journal-head">Journal d'activité</div>
+    <div class="journal-body" id="logs"></div>
+  </aside>
+</div>
+
+<script>
+const CAT_LABELS = {
+  deal: "Deal Flow",
+  lp: "LP",
+  participation: "Portefeuille",
+  conseil: "Conseil",
+  admin: "Admin",
+  spam: "Démarchage"
+};
+const URG_LABELS = { faible: "Faible", moyenne: "À suivre", haute: "Urgent" };
+const STATUS_LABELS = {
+  pending: "En attente",
+  classified: "Classé",
+  replied: "Répondu",
+  answered: "Clôturé",
+  relance_envoyee: "Relancé"
+};
+
+let prevStats = {};
+
+async function fetchEmails() {
+  const res = await fetch("/api/emails");
+  return res.json();
+}
+async function fetchLogs() {
+  const res = await fetch("/api/logs");
+  return res.json();
+}
+
+function renderStats(emails) {
+  const counts = {
+    "En attente": emails.filter(e => e.status === "pending").length,
+    "Classés": emails.filter(e => e.status === "classified").length,
+    "Répondus": emails.filter(e => ["replied","answered","relance_envoyee"].includes(e.status)).length,
+    "Alertes": emails.filter(e => e.alerte_temps_reel).length
+  };
+  const el = document.getElementById("stats");
+  el.innerHTML = Object.entries(counts).map(([label, val]) => {
+    const changed = prevStats[label] !== undefined && prevStats[label] !== val;
+    return `<div class="stat"><div class="num ${changed ? "pulse" : ""}">${val}</div><div class="label">${label}</div></div>`;
+  }).join("");
+  prevStats = counts;
+  setTimeout(() => document.querySelectorAll(".stat .num.pulse").forEach(n => n.classList.remove("pulse")), 500);
+}
+
+function urgClass(u) { return u ? `u-${u}` : ""; }
+
+function renderEmails(emails) {
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+  emails.forEach((e) => {
+    const card = document.createElement("div");
+    card.className = "dossier";
+    card.innerHTML = `
+      <div class="badges">
+        <span class="badge cat">${e.categorie ? (CAT_LABELS[e.categorie] || e.categorie) : "Non classé"}</span>
+        <span class="badge status">${STATUS_LABELS[e.status] || e.status}</span>
+        ${e.urgence ? `<span class="badge ${urgClass(e.urgence)}">${URG_LABELS[e.urgence]}</span>` : ""}
+        ${e.alerte_temps_reel ? `<span class="badge alertflag">Alerte envoyée</span>` : ""}
+      </div>
+      <h3>${e.subject}</h3>
+      <div class="meta">${e.fromName} · ${new Date(e.date).toLocaleDateString("fr-FR", { day:"2-digit", month:"short", hour:"2-digit", minute:"2-digit" })}</div>
+      <div class="body-text">${e.body}</div>
+      ${e.action_suggeree ? `<div class="action-line">Action suggérée : ${e.action_suggeree}</div>` : ""}
+      ${e.brouillon_reponse ? `<div class="draft"><strong>Brouillon de réponse</strong>${e.brouillon_reponse}</div>` : ""}
+      ${e.relanceContent ? `<div class="draft followup"><strong>Relance envoyée automatiquement</strong>${e.relanceContent}</div>` : ""}
+      <div class="card-actions">
+        <button class="btn" onclick="processEmail('${e.id}')" ${e.status !== "pending" ? "disabled" : ""}>Traiter</button>
+        <button class="btn" onclick="sendReply('${e.id}')" ${e.status !== "classified" ? "disabled" : ""}>Envoyer la réponse</button>
+        <button class="btn" onclick="markAnswered('${e.id}')" ${e.status !== "replied" ? "disabled" : ""}>Simuler réponse reçue</button>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function classifyLog(message) {
+  if (message.includes("❌")) return { icon: "✕", cls: "alert" };
+  if (message.includes("🚨")) return { icon: "🚨", cls: "alert" };
+  if (message.includes("⚠️")) return { icon: "⚠", cls: "warn" };
+  if (message.includes("🔁")) return { icon: "🔁", cls: "warn" };
+  if (message.includes("✅")) return { icon: "✓", cls: "success" };
+  if (message.includes("💬")) return { icon: "💬", cls: "success" };
+  if (message.includes("📩")) return { icon: "📩", cls: "neutral" };
+  return { icon: "•", cls: "neutral" };
+}
+
+function renderLogs(logs) {
+  const el = document.getElementById("logs");
+  if (!logs.length) {
+    el.innerHTML = `<div class="journal-empty">Aucune activité pour l'instant. Clique sur "Traiter" pour commencer.</div>`;
+    return;
+  }
+  el.innerHTML = logs.map(l => {
+    const { icon, cls } = classifyLog(l.message);
+    const cleanMsg = l.message.replace(/[❌🚨⚠️🔁✅💬📩⏳]/g, "").trim();
+    return `<div class="log-entry ${cls}">
+      <span class="icon">${icon}</span>
+      <div class="content">
+        <span class="time">${new Date(l.time).toLocaleTimeString("fr-FR")}</span>
+        <span class="msg">${cleanMsg}</span>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+async function refresh() {
+  const emails = await fetchEmails();
+  renderStats(emails);
+  renderEmails(emails);
+  renderLogs(await fetchLogs());
+}
+
+async function processEmail(id) {
+  await fetch(`/api/emails/${id}/process`, { method: "POST" });
+  refresh();
+}
+async function sendReply(id) {
+  await fetch(`/api/emails/${id}/send-reply`, { method: "POST" });
+  refresh();
+}
+async function markAnswered(id) {
+  await fetch(`/api/emails/${id}/mark-answered`, { method: "POST" });
+  refresh();
+}
+async function processAll() {
+  const btn = document.getElementById("btnAll");
+  btn.disabled = true;
+  btn.textContent = "Traitement en cours…";
+  await fetch(`/api/emails/process-all`, { method: "POST" });
+  btn.disabled = false;
+  btn.textContent = "Traiter tous les emails en attente";
+  refresh();
+}
+async function testAlert() {
+  const res = await fetch(`/api/test-alert`, { method: "POST" });
+  const data = await res.json();
+  alert(data.sent ? "Alerte envoyée — vérifie Telegram." : `Non envoyée : ${data.reason}`);
+  refresh();
+}
+
+refresh();
+setInterval(refresh, 4000);
+</script>
+</body>
+</html>
