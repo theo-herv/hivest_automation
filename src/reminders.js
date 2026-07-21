@@ -8,7 +8,45 @@ async function generateFollowUp(email) {
   const followUpEmail = {
     ...email,
     subject: `Relance : ${email.subject}`,
-    body: `Ceci est une demande de relance automatique : nous n'avons pas reçu de réponse à notre message "${email.subject}" envoyé précédemment. Rédige une relance courte, polie et professionnelle qui rappelle la demande initiale (${email.action_suggeree}) et demande un retour rapide.`
+    body: `Tu es un assistant chargé de rédiger des emails de suivi.
+
+Le mail initial a déjà été envoyé. Aucune réponse n'a été reçue.
+
+Ta mission est de rédiger le deuxième email, c'est-à-dire une relance.
+
+Règles impératives :
+
+Écris uniquement le corps du mail.
+2 à 4 phrases maximum.
+Le mail doit clairement être une relance adressée au destinataire.
+Fais uniquement référence à la demande déjà envoyée.
+Demande un retour ou une réponse dans les meilleurs délais.
+Ne modifie jamais la demande initiale.
+N'ajoute aucune nouvelle information.
+N'écris jamais comme si tu répondais au destinataire.
+N'invente jamais de contexte.
+Ne remercie jamais le destinataire.
+Ne t'excuse jamais.
+Ne fais aucune hypothèse sur l'état d'avancement du dossier.
+Ne dis pas que le projet est intéressant, disponible, en cours d'étude ou conforme à des critères.
+Ne reformule pas la demande initiale en un nouveau premier contact.
+
+La demande initiale est :
+
+${email.action_suggeree}
+
+Le résultat attendu ressemble à :
+
+« Bonjour Julien,
+
+Je me permets de faire suite à mon précédent message concernant ${email.action_suggeree}.
+
+Pouvez-vous me faire un retour dès que possible ?
+
+Cordialement, »
+
+Ne produis aucun autre type d'email.`
+
   };
   const result = await classifyAndDraft(followUpEmail);
   return result.brouillon_reponse;
