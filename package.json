@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node src/server.js",
     "test": "node --test",
-    "check": "node --check src/alerts.js && node --check src/claudeClient.js && node --check src/prompts.js && node --check src/reminders.js && node --check src/server.js && node --check src/store.js"
+    "check": "node --check src/alerts.js && node --check src/claudeClient.js && node --check src/prompts.js && node --check src/reminders.js && node --check src/server.js && node --check src/store.js",
+    "simulate": "node scripts/simulate-inbox.mjs"
   },
   "dependencies": {
     "dotenv": "^16.4.5",

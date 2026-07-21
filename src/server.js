@@ -3,7 +3,7 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 
-import { emails, logs, getEmail, addLog } from "./store.js";
+import { emails, logs, getEmail, addLog, receiveEmail } from "./store.js";
 import { classifyAndDraft } from "./claudeClient.js";
 import { sendUrgentAlert } from "./alerts.js";
 import { startReminderScheduler } from "./reminders.js";
@@ -15,6 +15,11 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 
 const FOLLOWUP_DELAY_MS = Number(process.env.FOLLOWUP_DELAY_MS || 86400000);
 
+// Urgences pour lesquelles la réponse est envoyée automatiquement, sans validation humaine.
+// L'urgence "haute" (dont les cas sensibles type fraude au RIB) reste TOUJOURS soumise
+// à validation manuelle — jamais d'envoi automatique sur ces cas.
+const AUTO_SEND_URGENCY_LEVELS = ["faible", "moyenne"];
+
 // Liste tous les emails avec leur statut actuel
 app.get("/api/emails", (req, res) => {
   res.json(emails);
@@ -23,6 +28,16 @@ app.get("/api/emails", (req, res) => {
 app.get("/api/logs", (req, res) => {
   res.json(logs);
 });
+
+// Marque un email comme répondu et programme une relance si nécessaire.
+// Utilisée à la fois par l'envoi manuel (/send-reply) et par l'envoi automatique.
+function markReplied(email) {
+  email.status = "replied";
+  email.repliedAt = new Date().toISOString();
+  if (email.necessite_relance) {
+    email.followUpDeadline = Date.now() + FOLLOWUP_DELAY_MS;
+  }
+}
 
 // Logique de traitement d'un email, réutilisée par /process et /process-all
 async function processEmail(email) {
@@ -34,10 +49,19 @@ async function processEmail(email) {
   if (result.alerte_temps_reel) {
     await sendUrgentAlert(email, result.raison_urgence);
   }
+
+  // Envoi automatique uniquement pour les urgences faible/moyenne. L'urgence haute
+  // (crise, deadline, cas sensible comme le RIB) attend toujours une validation humaine.
+  if (AUTO_SEND_URGENCY_LEVELS.includes(result.urgence)) {
+    markReplied(email);
+    addLog(`✉️ Réponse envoyée automatiquement (urgence ${result.urgence}) — "${email.subject}"`);
+  }
+
   return email;
 }
 
-// Classe l'email + génère le brouillon de réponse, déclenche une alerte si besoin
+// Classe l'email + génère le brouillon de réponse, déclenche une alerte si besoin,
+// envoie automatiquement si l'urgence est faible/moyenne
 app.post("/api/emails/:id/process", async (req, res) => {
   const email = getEmail(req.params.id);
   if (!email) return res.status(404).json({ error: "Email introuvable" });
@@ -84,7 +108,7 @@ app.post("/api/test-alert", async (req, res) => {
   res.json(result);
 });
 
-// Envoie (simule l'envoi) de la réponse générée, programme une relance si nécessaire
+// Envoie manuellement la réponse générée (cas des urgences "haute" qui ne partent jamais seules)
 app.post("/api/emails/:id/send-reply", (req, res) => {
   const email = getEmail(req.params.id);
   if (!email) return res.status(404).json({ error: "Email introuvable" });
@@ -92,12 +116,8 @@ app.post("/api/emails/:id/send-reply", (req, res) => {
     return res.status(400).json({ error: "L'email doit d'abord être traité (/process)" });
   }
 
-  email.status = "replied";
-  email.repliedAt = new Date().toISOString();
-  if (email.necessite_relance) {
-    email.followUpDeadline = Date.now() + FOLLOWUP_DELAY_MS;
-  }
-  addLog(`✅ Réponse envoyée — "${email.subject}"`);
+  markReplied(email);
+  addLog(`✅ Réponse envoyée manuellement — "${email.subject}"`);
   res.json(email);
 });
 
@@ -110,6 +130,18 @@ app.post("/api/emails/:id/mark-answered", (req, res) => {
   email.status = "answered";
   addLog(`💬 Réponse du destinataire reçue — "${email.subject}" (relance annulée)`);
   res.json(email);
+});
+
+// Point d'entrée du flux entrant simulé : un script externe (scripts/simulate-inbox.mjs)
+// vient "déposer" les emails un par un ici, comme le ferait une vraie boîte mail qui reçoit
+// du courrier au fil de l'eau. Voir README pour lancer la simulation.
+app.post("/api/inbox/receive", (req, res) => {
+  const incoming = req.body;
+  if (!incoming || !incoming.id || !incoming.subject) {
+    return res.status(400).json({ error: "Email invalide (id et subject requis)" });
+  }
+  const added = receiveEmail(incoming);
+  res.json(added);
 });
 
 const PORT = process.env.PORT || 3000;

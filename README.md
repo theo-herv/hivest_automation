@@ -41,6 +41,31 @@ garde-fou anti-doublon...). Aucune clé API réelle n'est nécessaire pour les l
 Un workflow **GitHub Actions** (`.github/workflows/ci.yml`) relance cette suite
 automatiquement à chaque push/PR sur `main`, sur Node 18/20/22 — sans secret à configurer.
 
+## Envoi automatique selon l'urgence
+
+- **Urgence faible ou moyenne** → la réponse générée est envoyée **automatiquement**, sans clic.
+- **Urgence haute** (deadline, crise, cas sensible comme le RIB modifié) → reste **toujours**
+  en attente de validation manuelle, quelle que soit la config. C'est volontaire : le brief
+  précise que l'outil doit alerter plutôt qu'agir seul sur les cas sensibles.
+
+## Simuler un flux entrant réel (sans IMAP/API mail)
+
+Par défaut, tous les emails du dataset sont préchargés au démarrage. Pour simuler une vraie
+boîte mail qui reçoit du courrier au fil de l'eau (utile pour la démo live) :
+
+```bash
+# Terminal 1 — démarre le serveur avec une boîte vide
+EMPTY_INBOX=true npm start
+
+# Terminal 2 — injecte les emails un par un, toutes les 4s par défaut
+npm run simulate
+```
+
+Le script (`scripts/simulate-inbox.mjs`) lit `data/emails.json` et POST chaque email vers
+`/api/inbox/receive`, exactement comme le demande le brief : une simple simulation du flux
+entrant, sans connexion IMAP ni API mail réelle. Ajuste `INJECT_INTERVAL_MS` dans `.env`
+pour changer le rythme.
+
 ## Configurer et tester l'alerte Telegram (bonus 1)
 
 1. Parler à **@BotFather** sur Telegram → `/newbot` → récupérer le token.
@@ -54,14 +79,17 @@ automatiquement à chaque push/PR sur `main`, sur Node 18/20/22 — sans secret 
 ## Scénario recommandé pour la démo live
 
 1. **Traiter tous les emails en attente** (bouton en haut) → montre le tri en masse
-   sur les 18 emails (catégories + urgences visibles d'un coup d'œil).
+   sur les 30 emails (catégories + urgences visibles d'un coup d'œil). Les urgences
+   faible/moyenne partent automatiquement ; seules les urgences hautes restent en attente.
 2. Zoomer sur **un email "deal" normal** (ex: Projet Alpha) → montrer le brouillon généré.
 3. Zoomer sur **un email urgent** (ex: covenant bancaire, démission DG) → montrer le tag
-   🚨 et l'alerte reçue sur Telegram en direct.
-4. Sur un email nécessitant une relance (ex: CIM Projet Beta, NDA à signer) → cliquer
-   **Envoyer la réponse**, attendre 30s (délai réduit pour la démo), montrer la relance
-   apparaître automatiquement dans le journal sans action manuelle.
+   🚨, l'alerte reçue sur Telegram en direct, et le fait qu'il attend une validation manuelle.
+4. Sur un email nécessitant une relance et non auto-envoyé → cliquer **Envoyer la réponse**,
+   attendre 30s (délai réduit pour la démo), montrer la relance apparaître automatiquement
+   dans le journal sans action manuelle.
 5. Montrer un email **spam** → brouillon vide, urgence faible : le tri filtre bien le bruit.
+6. (Optionnel) Relancer avec `EMPTY_INBOX=true` + `npm run simulate` pour montrer les
+   emails arriver un par un en direct plutôt que préchargés.
 
 ## Structure
 
