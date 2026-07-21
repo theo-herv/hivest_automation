@@ -213,6 +213,26 @@
     .draft.followup{ background:var(--warn-bg); border-color:rgba(240,184,79,0.4); }
     .draft.followup strong{ color:var(--warn); }
 
+    .draft-editor{
+      width:100%;
+      min-height:220px;
+      resize:vertical;
+
+      margin-top:8px;
+
+      padding:12px;
+
+      background:#09121d;
+      color:white;
+
+      border:1px solid var(--border-strong);
+      border-radius:6px;
+
+      font-family:var(--font-body);
+      font-size:13px;
+      line-height:1.6;
+    }
+
     .card-actions{ margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; }
     .card-actions .btn{
       border-color:var(--border-strong);
@@ -406,8 +426,46 @@
     }
 
     filtered.forEach((e) => {
+
+      let draftHtml = "";
+
+      if (e.brouillon_reponse) {
+
+        if (e.urgence === "haute") {
+
+          draftHtml = `
+          <div class="draft">
+            <strong>Brouillon de réponse</strong>
+
+            <textarea
+              id="draft-${e.id}"
+              class="draft-editor"
+            >${e.brouillon_reponse}</textarea>
+
+            <div style="margin-top:10px;">
+              <button class="btn" onclick="saveDraft('${e.id}')">
+                💾 Enregistrer les modifications
+              </button>
+            </div>
+          </div>
+        `;
+
+        } else {
+
+          draftHtml = `
+          <div class="draft">
+            <strong>Brouillon de réponse</strong>
+            ${e.brouillon_reponse}
+          </div>
+        `;
+
+        }
+
+      }
+
       const card = document.createElement("div");
       card.className = "dossier";
+
       card.innerHTML = `
       <div class="badges">
         <span class="badge cat">${e.categorie ? (CAT_LABELS[e.categorie] || e.categorie) : "Non classé"}</span>
@@ -415,18 +473,52 @@
         ${e.urgence ? `<span class="badge ${urgClass(e.urgence)}">${URG_LABELS[e.urgence]}</span>` : ""}
         ${e.alerte_temps_reel ? `<span class="badge alertflag">Alerte envoyée</span>` : ""}
       </div>
+
       <h3>${e.subject}</h3>
-      <div class="meta">${e.fromName} · ${new Date(e.date).toLocaleDateString("fr-FR", { day:"2-digit", month:"short", hour:"2-digit", minute:"2-digit" })}</div>
+
+      <div class="meta">
+        ${e.fromName} · ${new Date(e.date).toLocaleDateString("fr-FR", {
+        day: "2-digit",
+        month: "short",
+        hour: "2-digit",
+        minute: "2-digit"
+      })}
+      </div>
+
       <div class="body-text">${e.body}</div>
+
       ${e.action_suggeree ? `<div class="action-line">Action suggérée : ${e.action_suggeree}</div>` : ""}
-      ${e.brouillon_reponse ? `<div class="draft"><strong>Brouillon de réponse</strong>${e.brouillon_reponse}</div>` : ""}
-      ${e.relanceContent ? `<div class="draft followup"><strong>Relance envoyée automatiquement</strong>${e.relanceContent}</div>` : ""}
+
+      ${draftHtml}
+
+      ${e.relanceContent ? `
+        <div class="draft followup">
+          <strong>Relance envoyée automatiquement</strong>
+          ${e.relanceContent}
+        </div>
+      ` : ""}
+
       <div class="card-actions">
-        <button class="btn" onclick="processEmail('${e.id}')" ${e.status !== "pending" ? "disabled" : ""}>Traiter</button>
-        <button class="btn" onclick="sendReply('${e.id}')" ${e.status !== "classified" ? "disabled" : ""}>Envoyer la réponse</button>
-        <button class="btn" onclick="markAnswered('${e.id}')" ${e.status !== "replied" ? "disabled" : ""}>Simuler réponse reçue</button>
+        <button class="btn"
+          onclick="processEmail('${e.id}')"
+          ${e.status !== "pending" ? "disabled" : ""}>
+          Traiter
+        </button>
+
+        <button class="btn"
+          onclick="sendReply('${e.id}')"
+          ${e.status !== "classified" ? "disabled" : ""}>
+          Envoyer la réponse
+        </button>
+
+        <button class="btn"
+          onclick="markAnswered('${e.id}')"
+          ${e.status !== "replied" ? "disabled" : ""}>
+          Simuler réponse reçue
+        </button>
       </div>
     `;
+
       list.appendChild(card);
     });
   }
@@ -476,6 +568,28 @@
     await fetch(`/api/emails/${id}/send-reply`, { method: "POST" });
     refresh();
   }
+
+  async function saveDraft(id) {
+
+    const text = document.getElementById(`draft-${id}`).value;
+
+    await fetch(`/api/emails/${id}/draft`, {
+
+      method: "PUT",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        brouillon_reponse: text
+      })
+
+    });
+
+    refresh();
+  }
+
   async function markAnswered(id) {
     await fetch(`/api/emails/${id}/mark-answered`, { method: "POST" });
     refresh();

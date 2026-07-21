@@ -27,7 +27,8 @@ Règles importantes :
 - "necessite_relance" = true si la réponse envoyée attend une action de la part du destinataire
   (signature de NDA, confirmation de participation à un process, retour attendu sous délai).
 - Pour le spam/démarchage, le brouillon de réponse peut être vide ("") : pas de réponse nécessaire.
-- Sois concis, précis, et adapte le ton au registre du secteur (M&A / private equity).`;
+- Sois concis, précis, et adapte le ton au registre du secteur (M&A / private equity).
+Si c'est une relance alors ne lui dit pas merci pour votre relance puis`;
 
 export function buildUserPrompt(email) {
   return `Voici l'email à analyser :

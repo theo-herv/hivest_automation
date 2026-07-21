@@ -121,6 +121,18 @@ app.post("/api/emails/:id/send-reply", (req, res) => {
   res.json(email);
 });
 
+app.put("/api/emails/:id/draft", (req, res) => {
+  const email = getEmail(req.params.id);
+
+  if (!email) {
+    return res.status(404).json({ error: "Email introuvable" });
+  }
+
+  email.brouillon_reponse = req.body.brouillon_reponse;
+
+  res.json(email);
+});
+
 // Simule la réception d'une réponse du destinataire (annule la relance programmée)
 app.post("/api/emails/:id/mark-answered", (req, res) => {
   const email = getEmail(req.params.id);
